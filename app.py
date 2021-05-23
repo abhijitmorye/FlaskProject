@@ -10,7 +10,7 @@ def index():
 
 @app.route('/profile/<user>')
 def profile(user):
-    return render_template('profile.html', user=user)
+    return render_template('profile.html', user=user, isActive = True)
 
 @app.route('/admin')
 def admin():
@@ -27,6 +27,27 @@ def welcome(name):
         return redirect(url_for('admin'))
     else:
         return redirect(url_for('user', user=name))
+
+@app.route('/books')
+def book():
+    books = [
+        {
+            'name': 'Book 1',
+            'author': 'Author 1',
+            'price': '100'
+        },
+        {
+            'name': 'Book 2',
+            'author': 'Author 2',
+            'price': '200'
+        },
+        {
+            'name': 'Book 3',
+            'author': 'Author 3',
+            'price': '300'        }
+
+    ]
+    return render_template('books.html', books=books)
 
 
 if __name__ == "__main__":
