@@ -203,8 +203,8 @@
 		@app.route('/update', methods=['POST'])
 		def update():
 
-			name = request.form('name')
-			price = request.form('price')
+			name = request.form['name']
+			price = request.form['price']
 			book = Book.query.filter_by(name=name).first()
 			book.name = Name
 			book.price = new
