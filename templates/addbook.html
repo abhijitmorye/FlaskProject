@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    <form method="POST" action="/submitbook">
+        title  : <input type="text" name="title" id="title">
+        author : <input type="text" name="author" id="author">
+        price  : <input type="text" name="price" id="price">
+        <input type="submit">
+    </form>
+{% endblock %}

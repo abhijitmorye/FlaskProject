@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+
+        {% for book in books %}
+        <form method="POST" action="/update">
+            <input type="hidden" value="{{book.name}}" name="oldname">
+            title : <input type="text" name="newname" id="newname" value="{{book.name}}">
+            author : <input type="text" name="newauthor" id="newauthor" value="{{book.author}}">
+            price : <input type="text" name="newprice" id="newprice" value="{{book.price}}">
+            <input type="submit" value="update">
+        </form>
+        <form action="/delete" method="POST">
+            <input type="hidden" value="{{book.name}}" name="name">
+            <input type="submit" value="delete">
+        </form>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}
