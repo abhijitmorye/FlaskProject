@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block body%}
+
+<div class="index_container">
+    <div class="index_tag_box">
+        <h2 class="index_tag"> Login </h2>
+    </div>
+    <div class="waring_box">
+        {% if unkonwn %}
+        <h3 class="register_warning"> Credentials are wrong..Try again! </h3>
+        {% endif %}
+    </div>
+    <div class="index_widget_box">
+        <form class="form_box" action="/loginsubmit" method="post" enctype="multipart/form-data">
+            <div class="form_field">
+                <label class="form_label" for="name"> Enter your email id </label>
+                <input class="form_input" type="text" name="email_id" , placeholder="email id" , id="email_id">
+            </div>
+            <div class="form_field">
+                <label class="form_label" for="name"> Enter your passowrd </label>
+                <input class="form_input" type="password" name="password" , placeholder="password" , id="password">
+            </div>
+            <div class="form_field">
+                <input class="btn" type="submit" value="Login">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
