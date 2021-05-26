@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>To Do App</title>
+    <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -20,15 +20,22 @@
 
     <div class="header_container">
         <div class="header_logo_box">
-            <h2 class="header_logo"> <a class="home_link" href="/"> To Do App </a></h2>
+            <h2 class="header_logo"> <a class="home_link" href="/profile"> To Do App </a></h2>
         </div>
+           <div class="profile_box">
+               <div class="profile_name"> 
+                   <p class="name"> Welcome {{user.name}} </p>
+               </div>
+               <div class="profile_image_box">
+                   <img class="profile_image" src="{{ url_for('static', filename='img/avatar.png') }}" alt="avatar">
+               </div>
+           </div>
     </div>
 
-    {% block body %}
-
-
+    {% block profilebody %}
 
     {% endblock %}
+
 </body>
 
 </html>

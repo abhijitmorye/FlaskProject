@@ -14,7 +14,7 @@ body {
     width: 95%;
     margin: 0px auto;
     padding: 20px;
-    background-image: linear-gradient(to right, #7868e6, #b8b5ff); 
+    background-image: linear-gradient(to right, #7868e6, #b8b5ff);
 }
 
 
@@ -27,9 +27,9 @@ body {
 
 .header_logo_box {
 
-   padding: 20px;   
-   font-size: 20px;
-   font-weight: bold;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .home_link,
@@ -62,7 +62,7 @@ body {
 .index_container {
     width: 60%;
     margin: 150px auto 50px;
-    
+
 }
 
 .index_tag_box {
@@ -82,6 +82,7 @@ body {
 .index_tag:hover {
     color: #21094e;
 }
+
 @keyframes moveInLeft {
 
     0% {
@@ -118,7 +119,7 @@ body {
     width: 60%;
     margin: 0px auto;
     border-bottom: 5px solid #fff;
-    
+
 }
 
 .checkbox_outer {
@@ -131,7 +132,7 @@ body {
 }
 
 .index_widget:last-child {
-    margin-bottom:  20px;
+    margin-bottom: 20px;
 }
 
 .todoitem {
@@ -149,7 +150,7 @@ body {
     background-color: #21094e;
 }
 
-@keyframes moveBottomTop{
+@keyframes moveBottomTop {
 
     0% {
         opacity: 0;
@@ -185,7 +186,7 @@ body {
     margin-bottom: 15px;
 }
 
-.form_field:last-child{
+.form_field:last-child {
     margin-top: 40px;
 }
 
@@ -235,4 +236,138 @@ form_input:focus:invalid {
 
 .btn:active {
     transform: translateY(3px);
+}
+
+.profile_box {
+    width: 15%;
+    display: flex;
+    margin: auto 0px;
+
+}
+
+.profile_image_box {
+    width: 15%;
+    height: 45px;
+    border: 3px solid #fff;
+    border-radius: 50px;
+    margin-left: 10px;
+
+}
+
+.profile_image {
+    width: 100%;
+    border-radius: 10px;
+    background-size: cover;
+}
+
+.profile_name {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.name {
+    margin: auto 0px;
+}
+
+.main_task_container {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 100px auto;
+}
+
+.divider {
+    width: 0.5%;
+    border: 2px solid #fff;
+    background-color: #fff;
+}
+
+.add_task_container {
+    width: 45%;
+}
+
+.add_task_heading {
+    text-align: center;
+}
+
+
+.task_widget_box {
+    width: 100%;
+}
+
+.task_widget_box {
+    padding: 10px;
+}
+
+.task_widget {
+    display: flex;
+    margin-bottom: 30px;
+    justify-content: space-between;
+    border: 2px solid #fdfaf6;
+    padding: 20px;
+    background-image: linear-gradient(to right bottom, #867ae9, #ffe3fe);
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px #776be0;
+}
+
+.task_info {
+    padding: 10px;
+}
+
+.tasktitle_box,
+.taskmeta_box {
+    margin-bottom: 10px;
+}
+
+.title {
+    font-size: 25px;
+}
+
+.task_desc_box {
+    margin-top: 15px;
+}
+
+.task_buttons {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.task_update {
+    display: block;
+    margin: auto 0px;
+    border: 1px solid #fff;
+    padding: 15px;
+    background-color: #867ae9;
+    border-radius: 10px;
+    box-shadow: 0px 2px 3px #6f64cc;
+    transition: all 0.2s
+}
+
+.task_update:hover {
+    background-color: #5e53be;
+}
+
+.task_remove {
+    display: block;
+    margin: auto 0px;
+}
+
+.task_remove:hover {
+    color: #5e53be;
+}
+
+.task_update,
+.task_remove,
+.task_update:active,
+.task_remove:active,
+.task_update:visited,
+.task_remove:visited {
+    text-decoration: none;
+    font-size: inherit;
+    color: #fff;
+    font-weight: bold;
 }
