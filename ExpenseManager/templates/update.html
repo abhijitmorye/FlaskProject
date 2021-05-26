@@ -1,22 +1,21 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% block body %}
-
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <h3 class="mt-5">Add Expense</h3>
-            <form action="/submitexpense" method="POST">
+            <h3 class="mt-5">Update Expense</h3>
+            <form action="/updateexpense/{{expense.id}}" method="POST">
                 <div class="form-group">
                     <label for="">Name Of Expense</label>
-                    <input class="form-control" type="text" name="name" id="name">
+                    <input class="form-control" type="text" name="name" id="name" value="{{expense.name}}">
                 </div>
                 <div class="form-group">
                     <label for="">Date</label>
-                    <input class="form-control" type="date" name="date" , id="date">
+                    <input class="form-control" type="date" name="date" , id="date" value="{{expense.date}}">
                 </div>
                 <div class="form-group">
                     <label for="">Price</label>
-                    <input class="form-control" type="text" name="price" id="price">
+                    <input class="form-control" type="text" name="price" id="price" value="{{expense.price}}">
                 </div>
                 <div class="form-group">
                     <label for="">Category</label>
@@ -25,15 +24,14 @@
                         <option value="Travel">Travel</option>
                         <option value="Entertainment">Entertainment</option>
                         <option value="business">Business</option>
-                        <option value="other">Other</option>
+                        <option value="other" selected>Other</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <input class="btn btn-danger" type="submit" value="Add">
+                    <input class="btn btn-danger" type="submit" value="Update">
                 </div>
             </form>
         </div>
     </div>
 </div>
-
 {% endblock %}
