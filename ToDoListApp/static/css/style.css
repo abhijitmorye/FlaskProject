@@ -399,3 +399,11 @@ form_input:focus:invalid {
     color: #584eb6;
     font-weight: bold;
 }
+
+.add_task_container_modifier {
+    margin:  120px auto 30px;
+}
+
+.warning_box_modifier {
+    margin-top: 70px;
+}

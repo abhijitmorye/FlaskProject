@@ -98,9 +98,13 @@ def profile():
         email_id = session['response']
         user = UserData.query.filter_by(email_id=email_id).first()
         tasks = Task.query.filter_by(taskcreator_id=user.email_id).all()
+        if len(tasks) == 0:
+            empty = True
+        else:
+            empty = False
         for task in tasks:
             print(task.taskstatus)
-        return render_template('profile.html', user=user, tasks=tasks)
+        return render_template('profile.html', user=user, tasks=tasks, empty=empty)
 
 
 @app.route('/tasksubmit', methods=['POST'])
@@ -135,6 +139,32 @@ def taskdelete(taskid):
         return redirect(url_for('profile'))
 
 
+@app.route('/taskupdate/<int:task_id>')
+def taskupdate(task_id):
+    if 'response' in session:
+        user = UserData.query.filter_by(email_id=session['response']).first()
+        task = Task.query.filter_by(taskid=task_id).first()
+        return render_template('taskupdate.html', task=task, user=user)
+    else:
+        return redirect(url_for('index'))
+
+
+@app.route('/updatesubmit/<int:task_id>', methods=['POST'])
+def updateSubmit(task_id):
+
+    if 'response' in session:
+
+        task = Task.query.filter_by(taskid=task_id).first()
+        task.taskname = request.form['taskname']
+        task.taskpriority = request.form['taskpriority']
+        task.taskdescription = request.form['taskdescription']
+        task.taskstatus = request.form['taskstatus']
+        db.session.commit()
+        return redirect(url_for('profile'))
+    else:
+        return redirect(url_for('index'))
+
+
 @app.route('/logout')
 def logout():
 
@@ -143,6 +173,35 @@ def logout():
         return redirect(url_for('index'))
     else:
         return redirect(url_for('profile'))
+
+
+@app.route('/updateprofile')
+def updateprofile():
+    if 'response' in session:
+        user = UserData.query.filter_by(email_id=session['response']).first()
+        return render_template('updateprofile.html', user=user)
+
+
+@app.route('/update', methods=['POST'])
+def update():
+    if 'response' in session:
+        user = UserData.query.filter_by(email_id=session['response']).first()
+        name = request.form['name']
+        email_id = request.form['email_id']
+        phn_number = request.form['phn_number']
+        password = request.form['password']
+        isEmailExisting = UserData.query.filter_by(email_id=email_id).first()
+        if (isEmailExisting is None) or (isEmailExisting.email_id == session['response']):
+            user.name = name
+            user.email_id = email_id
+            user.phn_number = phn_number
+            user.password = password
+            db.session.commit()
+            return redirect(url_for('profile'))
+        else:
+            return render_template('updateprofile.html', existing=True, user=user)
+    else:
+        return redirect(url_for('index'))
 
 
 if __name__ == "__main__":

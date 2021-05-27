@@ -1,0 +1,36 @@
+{% extends 'profilebase.html' %}
+{% block profilebody %}
+<div class="index_container">
+    <div class="index_tag_box">
+        <h2 class="index_tag"> Update Profile </h2>
+    </div>
+    <div class="waring_box">
+        {% if existing %}
+        <h3 class="register_warning"> Email id already exists </h3>
+        {% endif %}
+    </div>
+    <div class="index_widget_box">
+        <form class="form_box" action="/update" method="post" enctype="multipart/form-data">
+            <div class="form_field">
+                <label class="form_label" for="name"> Enter your Name </label>
+                <input class="form_input" type="text" name="name" , value="{{user.name}}" , id="name">
+            </div>
+            <div class="form_field">
+                <label class="form_label" for="name"> Enter your email id </label>
+                <input class="form_input" type="text" name="email_id" , value="{{user.email_id}}" , id="email_id">
+            </div>
+            <div class="form_field">
+                <label class="form_label" for="name"> Enter your phone no. </label>
+                <input class="form_input" type="text" name="phn_number" , value="{{user.phn_number}}" , id="phn_number">
+            </div>
+            <div class="form_field">
+                <label class="form_label" for="name"> Enter your passowrd </label>
+                <input class="form_input" type="text" name="password" , value="{{user.password}}" , id="password">
+            </div>
+            <div class="form_field">
+                <input class="btn" type="submit" value="Update">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

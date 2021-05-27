@@ -48,6 +48,11 @@
         <div class="add_task_heading">
             <h2 class="index_tag"> Your Tasks! </h2>
         </div>
+        {% if empty %}
+        <div class="waring_box warning_box_modifier">
+            <h3 class="register_warning"> You dont have any tasks to do! </h3>
+        </div>
+        {% endif %}
         <div class="task_widget_box">
             {% for task in tasks %}
             <div class="task_widget">
@@ -71,7 +76,7 @@
                     </div>
                 </div>
                 <div class="task_buttons">
-                    <a href="#" class="task_update"> Task Update </a>
+                    <a href="/taskupdate/{{task.taskid}}" class="task_update"> Task Update </a>
                     <a href="/deletetask/{{task.taskid}}" class="task_remove"><svg xmlns="http://www.w3.org/2000/svg"
                             width="30" height="30" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                             <path

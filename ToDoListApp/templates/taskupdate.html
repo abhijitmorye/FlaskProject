@@ -1,0 +1,37 @@
+{% extends 'profilebase.html' %}
+{% block profilebody %}
+<div class="add_task_container add_task_container_modifier">
+    <div class="add_task_heading">
+        <h2 class="index_tag"> Update Task! </h2>
+    </div>
+    <div class="add_task_widget_box">
+        <form class="form_box" action="/updatesubmit/{{task.taskid}}" method="post" enctype="multipart/form-data">
+            <div class="form_field">
+                <label class="form_label" for="taskname"> Enter Task Name </label>
+                <input class="form_input" type="text" name="taskname" , value="{{task.taskname}}" , id="taskname">
+            </div>
+            <div class="form_field">
+                <label class="form_label" for="taskpriority"> Enter task priority </label>
+                <input class="form_input" type="text" name="taskpriority" , value="{{task.taskpriority}}" ,
+                    id="taskpriority">
+            </div>
+            <div class="form_field">
+                <label class="form_label" for="taskdescription"> Enter task description </label>
+                <input class="form_input" type="text" name="taskdescription" , value="{{task.taskdescription}}" ,
+                    id="taskdescription">
+            </div>
+            <div class="form_field">
+                <label class="form_label" for="taskstatus"> Enter status </label>
+                <select class="form_input" name="taskstatus" id="taskstatus"> Enter Status
+                    <option value="Not started">Not started</option>
+                    <option value="completed">Completed</option>
+                    <option value="In progress" selected >In progress</option>
+                </select>
+            </div>
+            <div class="form_field">
+                <input class="btn" type="submit" value="Update">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
