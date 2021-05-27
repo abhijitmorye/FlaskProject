@@ -135,5 +135,15 @@ def taskdelete(taskid):
         return redirect(url_for('profile'))
 
 
+@app.route('/logout')
+def logout():
+
+    if 'response' in session:
+        session.pop('response', None)
+        return redirect(url_for('index'))
+    else:
+        return redirect(url_for('profile'))
+
+
 if __name__ == "__main__":
     app.run(debug=True)
