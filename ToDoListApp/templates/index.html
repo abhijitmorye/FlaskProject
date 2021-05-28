@@ -17,18 +17,42 @@
 </head>
 
 <body>
+    <script>
+        function myMenu() {
+            var myMenuState = document.getElementById("header_container_sub_id");
+            if (myMenuState.style.display === "none") {
+                myMenuState.style.display = "block";
+            } else {
+                myMenuState.style.display = "none";
+            }
+        }
+    </script>
 
     <div class="header_container">
         <div class="header_container_main">
             <div class="header_logo_box">
                 <h2 class="header_logo"> <a class="home_link" href="/"> To Do App </a></h2>
             </div>
-            <div class="header_widget_box">
-                <div class="login_widget">
+            <div class="header_widget_box ">
+                <div class="login_widget sub_menu">
                     <a class="btn-header" href="/loginfresh"> Login </a>
                 </div>
-                <div class="login_widget">
+                <div class="login_widget sub_menu">
                     <a class="btn-header" href="/register"> Register </a>
+                </div>
+                <div onclick="myMenu()" class="login_widget menu" id="login_widget_id">
+                    <a class="btn-header"> Menu </a>
+                </div>
+            </div>
+        </div>
+        <div id="header_container_sub_id" style="display: none; transition: display 0.4s;"
+            class="header_container_sub header_container_sub_modifier">
+            <div class="profile_widget_box">
+                <div class="profile_widgets">
+                    <a class="btn-header btn_header_modifier" href="/loginfresh"> Login </a>
+                </div>
+                <div class="profile_widgets">
+                    <a class="btn-header btn_header_modifier" href="/register"> Register </a>
                 </div>
             </div>
         </div>
