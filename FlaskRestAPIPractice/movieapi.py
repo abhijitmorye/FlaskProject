@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response
 from flask_restful import Resource, Api
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -49,7 +49,7 @@ class AddMovie(Resource):
         session.add(movie)
         session.commit()
         session.close()
-        return "True"
+        return Response('True', status=201)
 
 
 class DeleteMovie(Resource):
