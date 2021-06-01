@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -40,8 +40,38 @@ class ListSingleMovie(Resource):
         return jsonify({'Result': output})
 
 
+class AddMovie(Resource):
+    def post(self):
+        session = Session()
+        data = request.get_json()
+        movie = Movies(name=data['name'],
+                       desc=data['desc'], rating=data['rating'])
+        session.add(movie)
+        session.commit()
+        session.close()
+        return "True"
+
+
+class DeleteMovie(Resource):
+    def delete(self, movie_id):
+        session = Session()
+        movie = session.query(Movies).filter_by(id=movie_id).first()
+        flag = False
+        if movie is not None:
+            session.delete(movie)
+            session.commit()
+            flag = True
+        session.close()
+        if flag:
+            return 'Deleted'
+        else:
+            return "Not deleted"
+
+
 api.add_resource(ListMovieAPI, '/movies/')
 api.add_resource(ListSingleMovie, '/movies/<int:id>')
+api.add_resource(AddMovie, '/addmovie')
+api.add_resource(DeleteMovie, '/deletemovie/<int:movie_id>')
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 import re
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template, request, redirect, url_for
 import requests
 import os
 from flask_sqlalchemy import SQLAlchemy
@@ -31,12 +31,44 @@ class MoviesSchema(ma.SQLAlchemyAutoSchema):
 @app.route('/movieList')
 def movieList():
     resp = requests.get('http://localhost:80/movies/')
-    return resp.text
+    return render_template('index.html', resp=json.loads(resp.text))
 
 
 @app.route('/movie/<int:id>')
 def movie(id):
     resp = requests.get('http://localhost:80/movies/{}'.format(id))
+    return render_template('singledetail.html', resp=json.loads(resp.text))
+
+
+@app.route('/addmovie')
+def addmovie():
+    return render_template('addmovie.html')
+
+
+@app.route('/submit', methods=['POST'])
+def submit():
+    name = request.form['name']
+    desc = request.form['desc']
+    rating = request.form['rating']
+
+    data = {
+        'name': name,
+        'desc': desc,
+        'rating': rating
+    }
+
+    resp = requests.post('http://localhost:80/addmovie',
+                         data=json.dumps(data), headers={'Content-Type': 'application/json',
+                                                         'Connection': 'keep-alive'})
+    return redirect(url_for('movieList'))
+
+
+@app.route('/deletemovie/<int:movie_id>')
+def deletemovie(movie_id):
+
+    resp = requests.delete(
+        'http://localhost:80/deletemovie/{}'.format(movie_id))
+
     return resp.text
 
 

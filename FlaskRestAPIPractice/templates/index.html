@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container mt-3">
+    <div class="row">
+        {% for key,value in resp.items() %}
+        <div class="col-md-6">
+            <h2>{{key}}</h2>
+            {% for value in resp[key].values() %}
+            {{value}}
+            {% endfor %}
+        </div>
+        {% endfor%}
+    </div>
+</div>
+{% endblock %}

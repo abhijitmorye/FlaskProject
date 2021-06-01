@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <form action="/submit" class="" method="POST" enctype="multipart/form-data">                
+                <input type="text" name='name' id='name' placeholder="Movie Name">
+                <input type="text" name='desc' id='desc' placeholder="Movie Description">
+                <input type="text" name='rating' id='rating' placeholder="Movie Rating">
+                <input type='submit'>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
