@@ -78,3 +78,9 @@ body {
     box-shadow: 1px 2px 5px #000;
     padding: 30px;
 }
+
+
+.historicview_container {
+    width: 60%;
+    margin: 200px auto;
+}

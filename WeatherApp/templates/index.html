@@ -56,7 +56,75 @@
             </div>
         </div>
     </div>
+    <a href="/viewpastweather/{{context.city_name}}" class="btn btn-warning mt-5"> Past Trend for {{context.city_name}}</a>
 </div>
 {% endif %}
 
+{% if searchForHistoric %}
+<div class="historicview_container">
+    <canvas id="line-chart" width="800" height="450">
+        <div class="div_hidden" id="city_dates">{{context.cityDate}}</div>
+        <div class="div_hidden" id="city_temps">{{context.cityTemps}}</div>
+    </canvas>
+    <script>
+        let dates = document.getElementById("city_dates").innerHTML;   
+        console.log(dates); 
+        let dateArray = dates.split(",");
+        let temp = []
+        for(i=0; i< dateArray.length; i++){
+            console.log(dateArray[i])
+            if(dateArray[i].includes("[")){
+                console.log(` [ --> ${dateArray[i]}`);
+                temp = dateArray[i].split("[");
+                dateArray[i] = temp[1];
+            }else if(dateArray[i].includes("]")){ 
+                console.log(` ] --> ${dateArray[i]}`);
+                temp = dateArray[i].split("]");
+                dateArray[i] = temp[0];
+            }
+        }
+
+        let temps = document.getElementById("city_temps").innerHTML;
+        console.log(temps);
+        let tempArray = temps.split(",");
+        let temp1 = []
+        for(i=0;i<tempArray.length;i++){
+            console.log(tempArray[i]);
+            if(tempArray[i].includes("[")){
+                console.log(` [ --> ${tempArray[i]}`);
+                temp1 = tempArray[i].split("[");
+                tempArray[i] = Number(temp1[1]);
+            }else if(tempArray[i].includes("]")){
+                console.log(` ] --> ${tempArray[i]}`);
+                temp1 = tempArray[i].split("]");
+                tempArray[i] = Number(temp1[0]);
+            }
+            tempArray[i] = Number(tempArray[i]);
+        }
+        console.log(dateArray);
+        console.log(tempArray);
+        new Chart(document.getElementById("line-chart"), {
+  type: 'line',
+  data: {
+    // labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+    labels: dateArray,
+    datasets: [{ 
+        // data: [86,114,106,106,107,111,133,221,783,2478],
+        data: tempArray,
+        label: "Historic Temparature",
+        borderColor: "#3e95cd",
+        fill: false
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: 'World population per region (in millions)'
+    }
+  }
+});
+    </script>
+</div>
+{% endif %}
 {% endblock %}
