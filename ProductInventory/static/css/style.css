@@ -1,0 +1,151 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 20px;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.header_container {
+    width: 90%;
+    margin: 10px auto;
+    padding: 20px;
+    display: flex;
+    background-color: #822659;
+}
+
+.main_heading_box {
+    width: 20%;
+    margin-right: 10px;
+    /* text-align: center; */
+}
+
+.home_link,
+.home_link:active,
+.home_link:visited {
+    font-size: 30px;
+    color: #fff;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.main_heading {
+    margin: auto 0px;
+}
+
+.sub_heading_box {
+    padding: 10px;
+}
+
+.menu_link {
+    display: flex;
+    list-style: none;
+    margin-top: auto;
+}
+
+.links {
+    display: block;
+    margin-left: 20px;
+
+}
+
+.links:first-child {
+    margin-left: 0px;
+}
+
+.menu_link,
+.menu_link:active,
+.menu_link:visited {
+    font-size: 15px;
+    color: #f6f6f6;
+    text-decoration: none;
+}
+
+.menu_link:hover {
+    color: #f8a1d1;
+}
+
+.container {
+    width: 60%;
+    margin: 50px auto;
+    padding: 30px;
+}
+
+.container_heading_box {
+    width: 90%;
+    text-align: center;
+    padding: 20px;
+    margin: 0px auto 10px;
+}
+
+.container_heading {
+    font-size: 30px;
+    font-weight: 700;
+    color: #b34180;
+}
+
+.container_main {
+    padding: 20px;
+}
+
+.form_box {
+    width: 50%;
+    margin: 10px auto;
+}
+
+.form_field {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form_label {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.form_input {
+    display: flex;
+    width: 100;
+    height: 45px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    font-size: inherit;
+    font-family: inherit;
+    outline: none;
+}
+
+.form_input:focus {
+    border-bottom: 4px solid #822659;
+}
+
+.form_button {
+    width: 30%;
+    margin: 5px auto;
+    padding: 10px;
+    font-size: 20px;
+    font-family: inherit;
+    background-color: #822659;
+    color: #fff;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    transition: all 0.4s;
+
+}
+
+.form_button:hover {
+    background-color: #b34180;
+    transform: translateY(-5px);
+}
+
+.form_button:active {
+    transform: translateY(10px);
+}

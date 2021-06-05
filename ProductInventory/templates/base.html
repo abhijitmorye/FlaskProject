@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Inventory</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="header_container">
+        <div class="main_heading_box">
+            <h3 class="main_heading">
+                <a href="/" class="home_link"> Product Inventory </a>
+            </h3>
+        </div>
+        <div class="sub_heading_box">
+            <ul class="menu_link">
+                <li class="links"><a href="#" class="menu_link"> View Product </a></li>
+                <li class="links"><a href="#" class="menu_link">Add Inventory</a></li>
+                <li class="links"><a href="#" class="menu_link">View Inventory</a></li>
+            </ul>
+        </div>
+    </div>
+
+    {% block body %}
+
+    {% endblock %}
+</body>
+
+</html>

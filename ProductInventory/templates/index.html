@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container">
+    <div class="container_heading_box">
+        <h4 class="container_heading">
+            Add Product
+        </h4>
+    </div>
+    <div class="container_main">
+        <form action="/addproduct" class="form_box" method='POST' , enctype='multipart/form-data'>
+            <div class="form_field">
+                <label for="productName" class="form_label">Add Product </label>
+                <input type="text" class="form_input" name="productName" id="productName"
+                    placeholder="Enter product name">
+            </div>
+            <div class="form_field">
+                <label for="prductQuantity" class="form_label">Add Quantity</label>
+                <input type="text" class="form_input" name="prductQuantity" id="prductQuantity"
+                    placeholder="Enter product quantity">
+            </div>
+            <div class="form_field">
+                <label for="productCategory" class="form_label">Add Category</label>
+                <select name="productCategory" id="productCategory" class="form_input">
+                    <option value="topwear">Top Wear</option>
+                    <option value="bottompwear">Bottom Wear</option>
+                    <option value="footpwear">Foot Wear</option>
+                    <option value="neckwear">Neck Wear</option>
+                </select>
+            </div>
+            <div class="form_field">
+                <label for="prodcutSinglePrice" class="form_label">Add price per peice</label>
+                <input type="text" class="form_input" name="prodcutSinglePrice" id="prodcutSinglePrice"
+                    placeholder="Enter product price per peice">
+            </div>
+            <div class="form_field">
+                <input type="submit" class="form_button" value="Add">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
