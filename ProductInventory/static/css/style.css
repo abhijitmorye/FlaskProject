@@ -149,3 +149,142 @@ body {
 .form_button:active {
     transform: translateY(10px);
 }
+
+.container_main_mod {
+    width: 90%;
+    margin: 10px auto;
+    display: flex;
+}
+
+.all_products_view_container {
+    width: 48%;
+    padding: 30px;
+}
+
+.produts_view {
+    width: 95%;
+    margin: 20px auto;
+}
+
+.product_box {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto;
+    background-image: linear-gradient(to right bottom, #b34180, #e36bae);
+    box-shadow: 0px 3px 5px #000;
+}
+
+.product_box_main {
+    padding: 3px;
+    width: 33%;
+
+}
+
+.product_name {
+    padding: 2px;
+    margin-bottom: 5px;
+}
+
+.name {
+    color: #fff;
+    font-weight: 700;
+    font-size: 25px;
+}
+
+.product_meta_box {
+    padding: 2px;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.product_meta {
+    display: block;
+    color: #f7f6e7;
+}
+
+.product_meta_mod {
+    color: #822659;
+}
+
+.product_box_sub {
+    padding: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto 0px;
+}
+
+.product_total_price {
+    color: #f0efe9;
+    margin-bottom: 5px;
+    font-size: 25px;
+}
+
+/* .product_inventory {
+
+} */
+
+.inventory {
+    padding: 4px;
+    border: 1px solid transperant;
+    background-color: #f6f6f6;
+    color: #822659;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 30px;
+}
+
+.product_widgets {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.products_func_link,
+.products_func_link:visited,
+.products_func_link:active {
+    display: block;
+    text-decoration: none;
+    padding: 5px;
+    border: 2px solid #fff;
+    background-color: #fff;
+    color: #822659;
+    margin-bottom: 15px;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px #000;
+    transition: all 0.2s;
+}
+
+.products_func_link:hover {
+
+    transform: translateY(2px);
+}
+
+.form_field_mod {
+    display: flex;
+    flex-direction: row;
+}
+
+.form_input_search {
+    width: 50%;
+    margin: auto 0px;
+}
+
+.form_button_search {
+    width: 25%;
+    margin: auto 0px auto 20px;
+
+}
+
+.clear,
+.clear:active,
+.clear:visited {
+    text-decoration: none;
+}

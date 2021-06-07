@@ -72,5 +72,20 @@ def addProduct():
         return "Failed"
 
 
+@app.route('/getproducts')
+def getproducts():
+    resp = requests.get('http://localhost:80/getproducts')
+    json_response = json.loads(resp.text)
+    return render_template('viewProducts.html', resp=json_response, flag=False)
+
+
+@app.route('/searchproduct', methods=['POST'])
+def searchProduct():
+    query = request.form['query']
+    resp = requests.get('http://localhost:80/searchproduct/{}'.format(query))
+    json_response = json.loads(resp.text)
+    return render_template('viewProducts.html', resp=json_response, flag=True)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
