@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container">
+    <div class="container_heading_box">
+        <h4 class="container_heading">
+            Add Inventory
+        </h4>
+    </div>
+    {% if flag %}
+    <div class="response">
+        <p class="message">
+            {{msg}}
+        </p>
+    </div>
+    {% endif %}
+    <div class="container_main">
+        <form action="/submitinventory" class="form_box" method='POST' , enctype='multipart/form-data'>
+            <div class="form_field">
+                <label for="categoryName" class="form_label">Add Inventory</label>
+                <input type="text" class="form_input" name="categoryName" id="categoryName"
+                    placeholder="Enter Inventory name">
+            </div>
+            <div class="form_field">
+                <input type="submit" class="form_button" value="Add">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

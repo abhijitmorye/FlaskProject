@@ -43,7 +43,12 @@ class InventorySerialization(ma.SQLAlchemyAutoSchema):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    resp = requests.get('http://localhost:80/getinventories')
+    data = json.loads(resp.text)
+    category_list = []
+    for key, value in data.items():
+        category_list.append(data[key]['categoryName'])
+    return render_template('index.html', category_list=category_list)
 
 
 @app.route('/addproduct', methods=['POST'])
@@ -85,6 +90,42 @@ def searchProduct():
     resp = requests.get('http://localhost:80/searchproduct/{}'.format(query))
     json_response = json.loads(resp.text)
     return render_template('viewProducts.html', resp=json_response, flag=True)
+
+
+@app.route('/addinventory')
+def addInvetory():
+    return render_template('addInventory.html', flag=False, msg="First Time")
+
+
+@app.route('/submitinventory', methods=['POST'])
+def submitInventory():
+    categoryName = request.form['categoryName']
+    data = {
+        'categoryName': categoryName,
+    }
+    print(data)
+    resp = requests.post('http://localhost:80/addinventory', headers={
+                         "Content-Type": "application/json",
+                         "Connection": 'keep-alive'
+                         }, data=json.dumps(data))
+    if resp.status_code == 201:
+        return render_template('addInventory.html', flag=True, msg="Inventory created successfully")
+    else:
+        return render_template('addInventory.html', flag=True, msg="Failure")
+
+
+@app.route('/viewinvetory')
+def viewinvetory():
+    resp = requests.get('http://localhost:80/getinventories')
+    print(resp.text)
+    return render_template('viewinventory.html', resp=json.loads(resp.text))
+
+
+@app.route('/searchinventory', methods=['POST'])
+def searchinventory():
+    query = request.form['query']
+    resp = requests.get('http://localhost:80/searchinventory/{}'.format(query))
+    return render_template('viewinventory.html', resp=json.loads(resp.text))
 
 
 if __name__ == '__main__':

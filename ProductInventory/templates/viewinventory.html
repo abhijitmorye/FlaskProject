@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="container_main container_main_mod">
+    <div class="all_products_view_container">
+        <div class="container_heading_box">
+            <h4 class="container_heading">
+                All Inventory
+            </h4>
+        </div>
+        <div class="produts_view">
+            {% for key, value in resp.items() %}
+            <div class="product_box">
+                <div class="product_box_main">
+                    <div class="product_name">
+                        <h3 class="name"> {{ resp[key]['categoryName'] }} </h3>
+                    </div>
+                    <div class="product_meta_box">
+                        <span class="product_meta">Quantity : <span class="product_meta_mod">
+                                {{ resp[key]['categoryQuantity'] }} </span> </span>
+                    </div>
+                </div>
+                <div class="product_box_sub">
+                    <div class="product_total_price">
+                        <h5 class="price"> &#8377; {{ resp[key]['categoryTotalAmount'] }} </h5>
+                    </div>
+                </div>
+                <div class="product_widgets">
+                    <a href="#" class="products_func_link">View Products</a>
+                    <a href="#" class="products_func_link">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="all_products_view_container">
+        <div class="container_heading_box">
+            <div class="search_box">
+                <form action="/searchinventory" method="POST" enctype="multipart/form-data">
+                    <div class="form_field form_field_mod">
+                        <input type="text" class="form_input form_input_search" name="query" id="query"
+                            placeholder="Enter inventory name">
+                        <input type="submit" class="form_button form_button_search" value="Search">
+                        <a href="/viewinvetory" class="form_button form_button_search clear">Clear</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from flask_restful import Resource, Api
 from app import Products, Inventory
-from app import ProductSerialization
+from app import ProductSerialization, InventorySerialization
 import json
 
 
@@ -84,9 +84,69 @@ class SearchProductOnQuery(Resource):
         return Response(json.dumps(searchdict), status=200)
 
 
+class AddInventory(Resource):
+    def post(self):
+        session = Session()
+        data = request.get_json()
+        print(data['categoryName'])
+        invetoryExist = session.query(Inventory).filter_by(
+            categoryName=data['categoryName'].lower()).first()
+        print(invetoryExist)
+        if invetoryExist is None:
+            newInventory = Inventory(categoryName=data['categoryName'])
+            session.add(newInventory)
+            session.commit()
+            session.close()
+            return Response("Succesffuly Added", status=201)
+        else:
+            return Response("Failed", status=503)
+
+
+class GetInvetory(Resource):
+    def get(self):
+        session = Session()
+        invetories = session.query(Inventory).all()
+        serializer = InventorySerialization()
+        invetory_dict = {}
+        counter = 0
+        for invetory in invetories:
+            output = serializer.dump(invetory)
+            inventorycounter = "Inventory_{}".format(counter)
+            invetory_dict[inventorycounter] = output
+            counter += 1
+        print(invetory_dict)
+        return Response(json.dumps(invetory_dict), status=200)
+        session.close()
+
+
+class SearchInvetory(Resource):
+    def get(self, query):
+        dbquery = "%{}%".format(query)
+        session = Session()
+        isInvetoryExists = session.query(Inventory).filter(
+            Inventory.categoryName.like(dbquery)).all()
+        serializer = InventorySerialization()
+        invetory_dict = {}
+        counter = 0
+        if len(isInvetoryExists) == 1:
+            output = serializer.dump(isInvetoryExists[0])
+            invetory_dict["Inventory_{}".format(counter)] = output
+        elif len(isInvetoryExists) > 1:
+            for inventory in isInvetoryExists:
+                output = serializer.dump(inventory)
+                invetorycounter = "Invetory_{}".format(counter)
+                invetory_dict[counter] = output
+                counter += 1
+        session.close()
+        return Response(json.dumps(invetory_dict), status=200)
+
+
 api.add_resource(AddProduct, '/addproduct')
 api.add_resource(GetProducts, '/getproducts')
 api.add_resource(SearchProductOnQuery, '/searchproduct/<query>')
+api.add_resource(AddInventory, '/addinventory')
+api.add_resource(GetInvetory, '/getinventories')
+api.add_resource(SearchInvetory, '/searchinventory/<query>')
 
 
 if __name__ == '__main__':
