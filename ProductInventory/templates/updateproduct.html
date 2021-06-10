@@ -31,10 +31,7 @@
             <div class="form_field">
                 <label for="productCategory" class="form_label">Add Category</label>
                 <select name="productCategory" id="productCategory" class="form_input">
-                    <option value="topwear">Top Wear</option>
-                    {% for category in category_list %}
-                    <option value="{{category}}">{{category}}</option>
-                    {% endfor %}
+                    <option value="{{product.productCategory}}">{{product.productCategory}}</option>
                     <!-- <option value="footpwear">Foot Wear</option>
                     <option value="neckwear">Neck Wear</option> -->
                 </select>

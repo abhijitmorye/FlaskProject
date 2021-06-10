@@ -160,7 +160,7 @@ def updateProductSubmit():
         return redirect(url_for('getproducts'))
     else:
         resp = requests.get(
-            'http://localhost:80//getsingleproduct//{}'.format(productID))
+            'http://localhost:80/getsingleproduct/{}'.format(productID))
         return render_template('updateproduct.html', flag=True, msg="something went wrong..try again", product=json.loads(resp.text))
 
 

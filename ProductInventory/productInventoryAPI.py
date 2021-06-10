@@ -178,9 +178,9 @@ class UpdateProduct(Resource):
         oldProductTotalPrice = prodcut_ex.procuctTotalPrice
 
         if newProductName == '':
-            ProductName = oldProductName
+            productName = oldProductName
         else:
-            ProductName = newProductName
+            productName = newProductName
         if int(newprductQuantity) < 0:
             productQuantity = oldProductQuantity
         else:
@@ -189,32 +189,38 @@ class UpdateProduct(Resource):
             productCategory = oldProductCategory
         else:
             productCategory = newproductCategory
-        if float(newprodcutSinglePrice) > 0.0:
+        if float(newprodcutSinglePrice) < 0.0:
             prodcutSinglePrice = oldProductSinglePrice
         else:
             prodcutSinglePrice = float(newprodcutSinglePrice)
-        if newProductTotalPrice > 0.0:
+        if newProductTotalPrice < 0.0:
             productTotalPrice = oldProductTotalPrice
         else:
             productTotalPrice = newProductTotalPrice
 
-        result = session.query(Products).filter_by(
-            productID=prodcut['product_id']).update({Products.productName: productName,
-                                                     Products.prductQuantity: productQuantity,
-                                                     productCategory: productCategory,
-                                                     Products.prodcutSinglePrice: prodcutSinglePrice,
-                                                     Products.procuctTotalPrice: productTotalPrice})
+        result = session.query(Products).filter(
+            Products.productID == prodcut['product_id']).update({Products.productName: productName,
+                                                                Products.prductQuantity: productQuantity,
+                                                                Products.productCategory: productCategory,
+                                                                Products.prodcutSinglePrice: prodcutSinglePrice,
+                                                                Products.procuctTotalPrice: productTotalPrice})
         inventory = session.query(Inventory).filter_by(
             categoryName=newproductCategory).first()
+        print("**********************************")
+        print(inventory.categoryName)
         # inventory.categoryQuantity = (inventory.categoryQuantity -
         #                               oldProductQuantity) + int(newprductQuantity)
         # inventory.categoryTotalAmount = (inventory.categoryTotalAmount -
         #                                  oldProductTotalPrice) + float(newProductTotalPrice)
         totalQuantity_i = (inventory.categoryQuantity -
                            oldProductQuantity) + productQuantity
+        if totalQuantity_i < 0.0:
+            totalQuantity_i = 0.0
         totalPrice_i = (inventory.categoryTotalAmount -
                         oldProductTotalPrice) + productTotalPrice
-        result1 = session.query(Inventory).filter_by(categoryName=productCategory).update(
+        if totalPrice_i < 0.0:
+            totalPrice_i = 0.0
+        result1 = session.query(Inventory).filter(Inventory.categoryName == productCategory).update(
             {Inventory.categoryQuantity: totalQuantity_i, Inventory.categoryTotalAmount: totalPrice_i})
         print(result)
         print(result1)

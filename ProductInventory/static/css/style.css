@@ -281,6 +281,7 @@ body {
 .form_button_search {
     width: 25%;
     margin: auto 0px auto 20px;
+    cursor: pointer;
 
 }
 
