@@ -128,5 +128,41 @@ def searchinventory():
     return render_template('viewinventory.html', resp=json.loads(resp.text))
 
 
+@app.route('/updateproduct/<int:product_id>')
+def updateProduct(product_id):
+    resp = requests.get(
+        'http://localhost:80//getsingleproduct//{}'.format(product_id))
+    print(json.loads(resp.text))
+    return render_template('updateproduct.html', product=json.loads(resp.text), flag=False, msg="")
+
+
+@app.route('/updateproductsubmit', methods=['POST'])
+def updateProductSubmit():
+    productID = request.form['productID']
+    productName = request.form['productName']
+    prductQuantity = request.form['prductQuantity']
+    productCategory = request.form['productCategory']
+    prodcutSinglePrice = request.form['prodcutSinglePrice']
+
+    product = {
+        'product_id': productID,
+        'productName': productName,
+        'prductQuantity': prductQuantity,
+        'productCategory': productCategory,
+        'prodcutSinglePrice': prodcutSinglePrice
+    }
+    print(product)
+    resp = requests.put(
+        'http://localhost:80/updateproduct/{}'.format(productID),
+        headers={'Content-Type': 'application/json'},
+        data=json.dumps(product))
+    if resp.status_code == 204:
+        return redirect(url_for('getproducts'))
+    else:
+        resp = requests.get(
+            'http://localhost:80//getsingleproduct//{}'.format(productID))
+        return render_template('updateproduct.html', flag=True, msg="something went wrong..try again", product=json.loads(resp.text))
+
+
 if __name__ == '__main__':
     app.run(debug=True)

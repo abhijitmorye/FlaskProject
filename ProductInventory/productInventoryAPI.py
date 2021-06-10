@@ -141,12 +141,96 @@ class SearchInvetory(Resource):
         return Response(json.dumps(invetory_dict), status=200)
 
 
+class GetSingleProduct(Resource):
+    def get(self, product_id):
+        session = Session()
+        product = session.query(Products).filter_by(
+            productID=product_id).first()
+        session.close()
+        if product is not None:
+            output = ProductSerialization()
+            product = output.dump(product)
+            print(product)
+            return Response(json.dumps(product), status=200)
+        else:
+            return Response(json.dumps("Product Not available", status=404))
+
+
+class UpdateProduct(Resource):
+    def put(self, product_id):
+        session = Session()
+        prodcut = request.get_json()
+        print(prodcut)
+        prodcut_ex = session.query(Products).filter_by(
+            productID=prodcut['product_id']).first()
+        newProductName = prodcut['productName']
+        print(newProductName)
+        newprductQuantity = prodcut['prductQuantity']
+        newproductCategory = prodcut['productCategory']
+        newprodcutSinglePrice = float(prodcut['prodcutSinglePrice'])
+        newProductTotalPrice = float(
+            newprductQuantity) * float(newprodcutSinglePrice)
+
+        oldProductName = prodcut_ex.productName
+        oldProductCategory = prodcut_ex.productCategory
+        oldProductQuantity = prodcut_ex.prductQuantity
+        oldProductSinglePrice = prodcut_ex.prodcutSinglePrice
+        oldProductTotalPrice = prodcut_ex.procuctTotalPrice
+
+        if newProductName == '':
+            ProductName = oldProductName
+        else:
+            ProductName = newProductName
+        if int(newprductQuantity) < 0:
+            productQuantity = oldProductQuantity
+        else:
+            productQuantity = int(newprductQuantity)
+        if newproductCategory == '':
+            productCategory = oldProductCategory
+        else:
+            productCategory = newproductCategory
+        if float(newprodcutSinglePrice) > 0.0:
+            prodcutSinglePrice = oldProductSinglePrice
+        else:
+            prodcutSinglePrice = float(newprodcutSinglePrice)
+        if newProductTotalPrice > 0.0:
+            productTotalPrice = oldProductTotalPrice
+        else:
+            productTotalPrice = newProductTotalPrice
+
+        result = session.query(Products).filter_by(
+            productID=prodcut['product_id']).update({Products.productName: productName,
+                                                     Products.prductQuantity: productQuantity,
+                                                     productCategory: productCategory,
+                                                     Products.prodcutSinglePrice: prodcutSinglePrice,
+                                                     Products.procuctTotalPrice: productTotalPrice})
+        inventory = session.query(Inventory).filter_by(
+            categoryName=newproductCategory).first()
+        # inventory.categoryQuantity = (inventory.categoryQuantity -
+        #                               oldProductQuantity) + int(newprductQuantity)
+        # inventory.categoryTotalAmount = (inventory.categoryTotalAmount -
+        #                                  oldProductTotalPrice) + float(newProductTotalPrice)
+        totalQuantity_i = (inventory.categoryQuantity -
+                           oldProductQuantity) + productQuantity
+        totalPrice_i = (inventory.categoryTotalAmount -
+                        oldProductTotalPrice) + productTotalPrice
+        result1 = session.query(Inventory).filter_by(categoryName=productCategory).update(
+            {Inventory.categoryQuantity: totalQuantity_i, Inventory.categoryTotalAmount: totalPrice_i})
+        print(result)
+        print(result1)
+        session.commit()
+        session.close()
+        return Response("Updated Successfully", status=204)
+
+
 api.add_resource(AddProduct, '/addproduct')
 api.add_resource(GetProducts, '/getproducts')
 api.add_resource(SearchProductOnQuery, '/searchproduct/<query>')
 api.add_resource(AddInventory, '/addinventory')
 api.add_resource(GetInvetory, '/getinventories')
 api.add_resource(SearchInvetory, '/searchinventory/<query>')
+api.add_resource(GetSingleProduct, '/getsingleproduct/<product_id>')
+api.add_resource(UpdateProduct, '/updateproduct/<product_id>')
 
 
 if __name__ == '__main__':
