@@ -93,7 +93,8 @@ class AddInventory(Resource):
             categoryName=data['categoryName'].lower()).first()
         print(invetoryExist)
         if invetoryExist is None:
-            newInventory = Inventory(categoryName=data['categoryName'])
+            newInventory = Inventory(
+                categoryName=data['categoryName'].lower(), categoryQuantity=0, categoryTotalAmount=0.0)
             session.add(newInventory)
             session.commit()
             session.close()
@@ -229,6 +230,74 @@ class UpdateProduct(Resource):
         return Response("Updated Successfully", status=204)
 
 
+class GetInvetoryProduct(Resource):
+    def get(self, inventory_name):
+        session = Session()
+        allProducts = session.query(Products).filter_by(
+            productCategory=inventory_name).all()
+        print(len(allProducts))
+        session.close()
+        product_dict = {}
+        counter = 0
+        output = ProductSerialization()
+        if len(allProducts) > 0:
+            for product in allProducts:
+                product_dict['Product_{}'.format(
+                    counter)] = output.dump(product)
+                counter += 1
+        print(product_dict)
+        return Response(json.dumps(product_dict), status=200)
+
+
+class DeleteProduct(Resource):
+    def delete(self, product_id):
+        session = Session()
+        prodcutExist = session.query(Products).filter_by(
+            productID=product_id).first()
+
+        if prodcutExist is not None:
+            session.delete(prodcutExist)
+            inventoryToProductExists = session.query(Inventory).filter_by(
+                categoryName=prodcutExist.productCategory).first()
+            newQuntity = inventoryToProductExists.categoryQuantity - prodcutExist.prductQuantity
+            newTotalPrice = inventoryToProductExists.categoryTotalAmount - \
+                prodcutExist.procuctTotalPrice
+            result = session.query(Inventory).filter(Inventory.categoryName == prodcutExist.productCategory).update(
+                {Inventory.categoryQuantity: newQuntity,
+                    Inventory.categoryTotalAmount: newTotalPrice}
+            )
+            session.commit()
+            session.close()
+            return Response("Deleted succesfully", status=200)
+        else:
+            return Response("Product does not exist", status=204)
+
+
+class DeleteInventory(Resource):
+    def delete(self, inventory_name):
+        session = Session()
+        inventoryExists = session.query(Inventory).filter_by(
+            categoryName=inventory_name.lower()).first()
+        print(inventoryExists)
+        if inventoryExists is not None:
+            session.delete(inventoryExists)
+            allAssociProducts = session.query(Products).filter_by(
+                productCategory=inventory_name.lower()).all()
+            print(allAssociProducts)
+            if len(allAssociProducts) > 0:
+                for product in allAssociProducts:
+                    print("***********************")
+                    print(product.productID)
+                    session.delete(product)
+            else:
+                pass
+            session.commit()
+            session.close()
+            return Response('Inventory deleted successfully', status=200)
+        else:
+            return Response('Inventory does not exists', status=204)
+
+
 api.add_resource(AddProduct, '/addproduct')
 api.add_resource(GetProducts, '/getproducts')
 api.add_resource(SearchProductOnQuery, '/searchproduct/<query>')
@@ -237,7 +306,9 @@ api.add_resource(GetInvetory, '/getinventories')
 api.add_resource(SearchInvetory, '/searchinventory/<query>')
 api.add_resource(GetSingleProduct, '/getsingleproduct/<product_id>')
 api.add_resource(UpdateProduct, '/updateproduct/<product_id>')
-
+api.add_resource(GetInvetoryProduct, '/getinventoryproducts/<inventory_name>')
+api.add_resource(DeleteProduct, '/deleteproduct/<int:product_id>')
+api.add_resource(DeleteInventory, '/deleteinventory/<inventory_name>')
 
 if __name__ == '__main__':
     productInvetoryApp.run(debug=True, port=80)

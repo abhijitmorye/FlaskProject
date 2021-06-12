@@ -81,7 +81,7 @@ def addProduct():
 def getproducts():
     resp = requests.get('http://localhost:80/getproducts')
     json_response = json.loads(resp.text)
-    return render_template('viewProducts.html', resp=json_response, flag=False)
+    return render_template('viewProducts.html', resp=json_response, flag=False, msg="")
 
 
 @app.route('/searchproduct', methods=['POST'])
@@ -118,14 +118,14 @@ def submitInventory():
 def viewinvetory():
     resp = requests.get('http://localhost:80/getinventories')
     print(resp.text)
-    return render_template('viewinventory.html', resp=json.loads(resp.text))
+    return render_template('viewinventory.html', resp=json.loads(resp.text), flag=False, msg="")
 
 
 @app.route('/searchinventory', methods=['POST'])
 def searchinventory():
     query = request.form['query']
     resp = requests.get('http://localhost:80/searchinventory/{}'.format(query))
-    return render_template('viewinventory.html', resp=json.loads(resp.text))
+    return render_template('viewinventory.html', resp=json.loads(resp.text),  flag=False, msg="")
 
 
 @app.route('/updateproduct/<int:product_id>')
@@ -162,6 +162,42 @@ def updateProductSubmit():
         resp = requests.get(
             'http://localhost:80/getsingleproduct/{}'.format(productID))
         return render_template('updateproduct.html', flag=True, msg="something went wrong..try again", product=json.loads(resp.text))
+
+
+@app.route('/inventoryproducts/<inventory_name>')
+def invetoryProducts(inventory_name):
+    resp = requests.get(
+        'http://localhost:80/getinventoryproducts/{}'.format(inventory_name))
+    if ~('Product_0' in resp.text):
+        flag = True
+    else:
+        flag = False
+    return render_template('viewProducts.html', flag=flag, msg="No products in this inentory", resp=json.loads(resp.text))
+
+
+@app.route('/removeproduct/<int:product_id>')
+def removeProduct(product_id):
+    resp = requests.delete(
+        'http://localhost:80/deleteproduct/{}'.format(product_id))
+    if resp.status_code == 200:
+        return redirect(url_for('getproducts'))
+    else:
+        resp = requests.get('http://localhost:80/getproducts')
+        flag = True
+        resp = json.loads(resp.text)
+        msg = "Product is not in the database."
+        return render_template('viewProducts.html', flag=flag, msg=msg, resp=resp)
+
+
+@app.route('/removeinventory/<inventory_name>')
+def removeInventory(inventory_name):
+    resp = requests.delete(
+        'http://localhost:80/deleteinventory/{}'.format(inventory_name))
+    if resp.status_code == 200:
+        return redirect(url_for('viewinvetory'))
+    else:
+        resp = requests.get('http://localhost:80/getinventories')
+        return render_template('viewinventory.html', resp=json.loads(resp.text), flag=True, msg="No inventory found")
 
 
 if __name__ == '__main__':

@@ -2,6 +2,13 @@
 {% block body %}
 
 <div class="container_main container_main_mod">
+    {% if flag %}
+    <div class="response">
+        <p class="message">
+            {{msg}}
+        </p>
+    </div>
+    {% else %}
     <div class="all_products_view_container">
         <div class="container_heading_box">
             <h4 class="container_heading">
@@ -26,8 +33,8 @@
                     </div>
                 </div>
                 <div class="product_widgets">
-                    <a href="#" class="products_func_link">View Products</a>
-                    <a href="#" class="products_func_link">Delete</a>
+                    <a href="/inventoryproducts/{{ resp[key]['categoryName'] }}" class="products_func_link">View Products</a>
+                    <a href="/removeinventory/{{ resp[key]['categoryName'] }}" class="products_func_link">Delete</a>
                 </div>
             </div>
             {% endfor %}
@@ -48,6 +55,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 </div>
 
 {% endblock %}
