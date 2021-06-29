@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Corona Tracker</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/coronaTracker.png') }}" type="image/x-icon">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="header_block">
+        <div class="logo_block">
+            <div class="logo_icon">
+                <img src="{{ url_for('static', filename='img/coronaTracker.png')}}" alt="" class="icon">
+            </div>
+            <div class="logo_title">
+                <a href="/" class="title">
+                    Corona Tracker
+                </a>
+            </div>           
+        </div>
+        <!-- <div class="header_menu">
+            <ul class="menu_list">
+                <li class="sublist"><a href="" class="sublink">Track by Country</a></li>
+                <li class="sublist"><a href="" class="sublink">Track by City</a></li>
+            </ul>
+        </div> -->
+    </div>
+
+    {% block body %}
+    {% endblock %}
+</body>
+
+</html>

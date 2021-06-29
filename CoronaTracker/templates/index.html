@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="container">
+    <div class="worldmap_block">
+
+    </div>
+
+    <div class="main_block">
+        <div class="block">
+            <h3 class="block_heading">
+                Total Cases
+            </h3>
+            <p class="block_text">
+                {{ data['Total Cases_text'] }}
+                <span class="span_block">
+                    {{ data['Active Cases_text'] }}
+                </span>
+            </p>
+        </div>
+        <div class="block">
+            <h3 class="block_heading">
+                Total Deaths
+            </h3>
+            <p class="block_text">
+                {{ data['Total Deaths_text'] }}
+                <span class="span_block">
+                    {{ data['New Deaths_text'] }}
+                </span>
+            </p>
+        </div>
+        <div class="block">
+            <h3 class="block_heading">
+                Total Recoverd
+            </h3>
+            <p class="block_text">
+                {{ data['Total Recovered_text'] }}
+            </p>
+        </div>
+    </div>
+    <div class="sub_block">
+        <div class="sub_block_top">
+            <h2 class="sub_block_heading">
+                Top 5 affected countries
+            </h2>
+            <div class="search_block">
+                <form action="/search" class="search" method='POST' enctype='multipart/form-data'>
+                    <input type="text" name="country" id="country" placeholder="Enter a  country." class="input">
+                    <input type="submit" value="Search" class="btn">
+                </form>
+            </div>
+        </div>
+        <div class="sub_block_row">
+            <div class="col_country">
+                <h4 class="country">Country</h4>
+            </div>
+            <div class="col_sub_data">
+                <div class="col_data">
+                    <h4 class="data">Total Cases</h4>
+                </div>
+                <div class="col_data">
+                    <h4 class="data">Total Recoverd</h4>
+                </div>
+                <div class="col_data">
+                    <h4 class="data">Total Death</h4>
+                </div>
+            </div>
+        </div>
+        {% for countryData in topfiveData %}
+        <div class="sub_block_row">
+            <div class="col_country">
+                <h4 class="country">{{ countryData['Country_text'] }}</h4>
+            </div>
+            <div class="col_sub_data">
+                <div class="col_data">
+                    <h4 class="data">{{ countryData['Total Cases_text'] }}</h4>
+                </div>
+                <div class="col_data">
+                    <h4 class="data">{{ countryData['Total Recovered_text'] }}</h4>
+                </div>
+                <div class="col_data">
+                    <h4 class="data">{{ countryData['Total Deaths_text'] }}</h4>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+
+        {% if flag %}
+
+        <div class="sub_block_top mt-20">
+            <h2 class="sub_block_heading">
+                Search Result
+            </h2>
+        </div>
+
+        <div class="sub_block_row">
+            <div class="col_country">
+                <h4 class="country">Country</h4>
+            </div>
+            <div class="col_sub_data">
+                <div class="col_data">
+                    <h4 class="data">Total Cases</h4>
+                </div>
+                <div class="col_data">
+                    <h4 class="data">Total Recoverd</h4>
+                </div>
+                <div class="col_data">
+                    <h4 class="data">Total Death</h4>
+                </div>
+            </div>
+        </div>
+        <div class="sub_block_row">
+            <div class="col_country">
+                <h4 class="country">{{ searchCountryData['Country_text'] }}</h4>
+            </div>
+            <div class="col_sub_data">
+                <div class="col_data">
+                    <h4 class="data">{{ searchCountryData['Total Cases_text'] }}</h4>
+                </div>
+                <div class="col_data">
+                    <h4 class="data">{{ searchCountryData['Total Recovered_text'] }}</h4>
+                </div>
+                <div class="col_data">
+                    <h4 class="data">{{ searchCountryData['Total Deaths_text'] }}</h4>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
